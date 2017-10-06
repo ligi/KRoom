@@ -1,0 +1,43 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'android-maven'
+apply plugin: 'de.mobilej.unmock'
+
+def libVersionName = '0.1'
+def libVersionCode = 1
+
+version libVersionName
+
+repositories {
+    jcenter()
+    maven { url 'https://maven.google.com' }
+}
+
+dependencies {
+    compile "com.android.support:support-v4:$support_version"
+    compile "android.arch.persistence.room:runtime:1.0.0-beta2"
+
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    testCompile 'junit:junit:4.12'
+    testCompile 'com.squareup.assertj:assertj-android:1.2.0'
+}
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.1"
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 26
+        versionCode libVersionCode
+        versionName libVersionName
+    }
+
+    lintOptions {
+        baseline file("../.ci/lint-baseline.xml")
+        checkAllWarnings true
+        warningsAsErrors true
+    }
+
+}
