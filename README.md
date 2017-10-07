@@ -6,9 +6,11 @@ I was writing a extension function for room in the WALLETH project and realized 
 Currently it is only this one:
 
 ```kotlin
-fun <T : RoomDatabase> T.inTransaction(call: T.() -> Unit) {
+fun <T : RoomDatabase> T.inTransaction(call: T.() -> Unit) = try {
     beginTransaction()
     call.invoke(this)
+    setTransactionSuccessful()
+} finally {
     endTransaction()
 }
 ```
