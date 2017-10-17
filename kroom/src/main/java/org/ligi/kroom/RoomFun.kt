@@ -2,9 +2,9 @@ package org.ligi.kroom
 
 import android.arch.persistence.room.RoomDatabase
 
-fun <T : RoomDatabase> T.inTransaction(call: T.() -> Unit) = try {
+inline fun <T : RoomDatabase> T.inTransaction(transaction: T.() -> Unit) = try {
     beginTransaction()
-    call.invoke(this)
+    transaction()
     setTransactionSuccessful()
 } finally {
     endTransaction()
